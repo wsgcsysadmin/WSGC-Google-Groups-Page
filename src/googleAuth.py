@@ -13,7 +13,7 @@ settings = {
     'scopes': (
         'https://www.googleapis.com/auth/admin.directory.group',
         'https://www.googleapis.com/auth/admin.directory.user',
-        'https://www.googleapis.com/auth/admin.directory.group.member',)
+        'https://www.googleapis.com/auth/admin.directory.group.member',),
     'secrets': os.path.join('.', 'client_secret.json'), # aka CLIENT_SECRET_FILE
     'app_name': 'WSGC Google Groups List', # aka APPLICATION_NAME
 }
