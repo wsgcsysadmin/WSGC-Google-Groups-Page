@@ -1,0 +1,5 @@
+main.py:
+    - Instead of just getting owner emails, also get the name of the owner
+
+templates/index.html:
+    - Add a way to search for groups
