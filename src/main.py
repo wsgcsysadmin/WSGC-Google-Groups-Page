@@ -86,7 +86,15 @@ def render_group_page():
 
 def main():
     drive_service = get_service('drive', 'v3')
-    return drive_service
+    results = drive_service.files().list(
+        pageSize=10, fields='nextPageToken, files(id, name)').execute()
+    items = results.get('files', [])
+    if not items:
+        print('No files found.')
+    else:
+        print('Files:')
+        for item in items:
+            print('{0} ({1})'.format(item['name'], item['id']))
 
 if __name__ == '__main__':
     main()
