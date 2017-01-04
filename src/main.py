@@ -8,7 +8,7 @@ if __name__ == '__main__':
     groups = groups_handler.get_domain_groups()
 
     for group in groups:
-        print(group['name'])
+        print(group)
     
     # Generate an HTML template
     # Run Flask to host page
