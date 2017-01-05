@@ -1,13 +1,53 @@
-from google_authenticator import GoogleAuth
+from googleAuth import GoogleAuth
+
+class User(GoogleAuth):
+    
+    def __init__(self):
+        GoogleAuth.__init__(self, 'admin', 'directory_v1')
+        self.service = GoogleAuth.get_service(self).users()
+        self.name_cache = {}
+
+    def get_name_from_id(self, user_id):
+        """
+            Check to see if we already looked up the username. If not, make
+            the API call and add it to the cache.
+        """
+        name = self.name_cache.get(user_id, None)
+
+        if not name:
+            response = self.service.get(userKey=user_id).execute()
+            name = response['name']['fullName']
+            self.name_cache[user_id] = name
+            print("Added to name_cache: " + self.name_cache[user_id])
+
+        return name
+
+class Members(GoogleAuth):
+    
+    def __init__(self):
+        GoogleAuth.__init__(self, 'admin', 'directory_v1')
+        self.service = GoogleAuth.get_service(self).members()
+
+    def find_owners(self, group_id):
+        """
+            Returns a list of owners for given group_id
+        """
+        owners = self.service.list(groupKey=group_id, roles='OWNER').execute()
+        results = []
+        if owners.get('members', None):
+            for member in owners['members']:
+                results.append({
+                    'id': member['id'],
+                    'email': member['email']})
+
+        return results
 
 class Groups(GoogleAuth):
     
     def __init__(self, domain=None):
         self.domain = domain
 
-        api_name = 'admin'
-        api_version = 'directory_v1'
-        GoogleAuth.__init__(self, api_name, api_version)
+        GoogleAuth.__init__(self, 'admin', 'directory_v1')
         self.service = GoogleAuth.get_service(self).groups()
 
     def api_groups_list(self, page_token=None):
