@@ -1,4 +1,4 @@
-import secrets
+import secrets # You'll need to create your own secrets file
 
 from googleDirectory import Groups, Members, User
 from googleapiclient.errors import HttpError

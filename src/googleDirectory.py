@@ -18,7 +18,6 @@ class User(GoogleAuth):
             response = self.service.get(userKey=user_id).execute()
             name = response['name']['fullName']
             self.name_cache[user_id] = name
-            print("Added to name_cache: " + self.name_cache[user_id])
 
         return name
 
@@ -30,7 +29,7 @@ class Members(GoogleAuth):
 
     def find_owners(self, group_id):
         """
-            Returns a list of owners for given group_id
+            Returns a list of owners for a group given its group_id
         """
         owners = self.service.list(groupKey=group_id, roles='OWNER').execute()
         results = []

@@ -16,7 +16,7 @@ class GoogleAuth():
             'https://www.googleapis.com/auth/admin.directory.group.member',
             'https://www.googleapis.com/auth/drive'),
         'secrets': os.path.join('.', 'client_secret.json'), # aka CLIENT_SECRET_FILE
-        'app_name': 'WSGC Google Groups List', # aka APPLICATION_NAME
+        'app_name': 'Google Groups List for Domains', # aka APPLICATION_NAME
     }
     
     def __init__(self, api_name, api_version):
@@ -38,17 +38,17 @@ class GoogleAuth():
         if not os.path.exists(credential_dir):
             os.makedirs(credential_dir)
         credential_path = os.path.join(credential_dir,
-        'wsgc-google-groups-list.json')
+        'domains-google-groups-list.json')
 
         store = Storage(credential_path)
         credentials = store.get()
         if not credentials or credentials.invalid:
-            flow = client.flow_from_clientsecrets(settings['secrets'], settings['scopes'])
-            flow.user_agent = settings['app_name']
+            flow = client.flow_from_clientsecrets(self.settings['secrets'], self.settings['scopes'])
+            flow.user_agent = self.settings['app_name']
             if flags:
                 credentials = tools.run_flow(flow, store, flags)
             else: # Needed only for compatibility with Python 2.6
-                credentials = tools.run(flow, store)
+                credentials = tools.run_flow(flow, store)
             print('Storing credentials to ' + credential_path)
 
         return credentials
