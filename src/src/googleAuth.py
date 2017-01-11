@@ -15,7 +15,7 @@ class GoogleAuth():
             'https://www.googleapis.com/auth/admin.directory.user',
             'https://www.googleapis.com/auth/admin.directory.group.member',
             'https://www.googleapis.com/auth/drive'),
-        'secrets': os.path.join('.', 'client_secret.json'), # aka CLIENT_SECRET_FILE
+        'secrets': os.path.join('..', 'client_secret.json'), # aka CLIENT_SECRET_FILE
         'app_name': 'Google Groups List for Domains', # aka APPLICATION_NAME
     }
     
