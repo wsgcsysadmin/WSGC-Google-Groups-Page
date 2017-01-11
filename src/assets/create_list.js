@@ -1,5 +1,5 @@
 var options = {
-    valueNames: [ 'name', 'born' ]
+    valueNames: [ 'name', 'email', 'owners' ]
 };
 
-var userList = new List('users', options);
+var userList = new List('groups', options);

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="index.css" />
+    </head>
+
+    <body>
+        <div id="groups">
+            <input class="search" placeholder="Search" />
+
+            <button class="sort" data-sort="name">
+                Sort by name
+            </button>
+
+            <table>
+                <!-- IMPORTANT, class="list" have to be at tbody -->
+                <tbody class="list">
+                    {% block content_block %}
+                    {% endblock content_block %}
+                </tbody>
+            </table>
+        </div>
+
+        <script src="http://listjs.com/assets/javascripts/list.min.js"></script>
+        <script src="create_list.js" type="text/javascript"></script>
+    </body>
+</html>
+
