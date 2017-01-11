@@ -1,11 +1,19 @@
 from googleAuth import GoogleAuth
+from httplib2 import ServerNotFoundError
+
+import sys
 
 class User(GoogleAuth):
     
     def __init__(self):
         GoogleAuth.__init__(self, 'admin', 'directory_v1')
-        self.service = GoogleAuth.get_service(self).users()
         self.name_cache = {}
+
+        try:
+            self.service = GoogleAuth.get_service(self).users()
+        except ServerNotFoundError:
+            print("No connection to Google's servers. Try again later...")    
+            sys.exit()
 
     def get_name_from_id(self, user_id):
         """
@@ -25,7 +33,12 @@ class Members(GoogleAuth):
     
     def __init__(self):
         GoogleAuth.__init__(self, 'admin', 'directory_v1')
-        self.service = GoogleAuth.get_service(self).members()
+
+        try:
+            self.service = GoogleAuth.get_service(self).members()
+        except ServerNotFoundError:
+            print("No connection to Google's servers. Try again later...")    
+            sys.exit()
 
     def find_owners(self, group_id):
         """
@@ -47,7 +60,12 @@ class Groups(GoogleAuth):
         self.domain = domain
 
         GoogleAuth.__init__(self, 'admin', 'directory_v1')
-        self.service = GoogleAuth.get_service(self).groups()
+
+        try:
+            self.service = GoogleAuth.get_service(self).groups()
+        except ServerNotFoundError:
+            print("No connection to Google's servers. Try again later...")    
+            sys.exit()
 
     def api_groups_list(self, page_token=None):
         """
