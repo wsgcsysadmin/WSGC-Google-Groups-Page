@@ -5,8 +5,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from googleDirectory import Groups, Members, User
 from googleapiclient.errors import HttpError
 
-if __name__ == '__main__':
-    # Gather Google Data
+def gather_group_data():
     print("Pullig data from Google: <", end="", flush=True)
     groups_handler = Groups(secrets.domain)
     member_handler = Members()
@@ -28,7 +27,10 @@ if __name__ == '__main__':
                     'email': member['email']})
     print('>')
 
-    # Generate an HTML template
+    return groups
+
+def generate_html_from_groups(groups):
+    # First, build up the html content
     print("Generating HTML content...")
 
     html = "{% extends 'base.html' %}"
@@ -76,6 +78,7 @@ if __name__ == '__main__':
 
     html += "{% endblock content_block %}"
 
+    # Next, use the html content to generate index.html from a template
     env = Environment(
         loader = FileSystemLoader('../assets'),
         autoescape = select_autoescape(['html', 'xml'])
@@ -85,5 +88,9 @@ if __name__ == '__main__':
     with open('../assets/index.html', 'w') as index_file:
         index_file.write(index_contents.render())
 
+def build_index_page():
+    groups = gather_group_data()
+    generate_html_from_groups(groups)
 
-    # Run Flask to host page
+if __name__ == '__main__':
+    build_index_page()
