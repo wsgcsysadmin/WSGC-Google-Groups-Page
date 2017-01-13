@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 
+<!--
+    {% block date_stamp %}
+    {% endblock date_stamp %}
+-->
+
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="index.css" />
@@ -10,7 +15,11 @@
             <input class="search" placeholder="Search" />
 
             <button class="sort" data-sort="name">
-                Sort by name
+                Sort by group name
+            </button>
+
+            <button class="sort" data-sort="email">
+                Sort by email address
             </button>
 
             <table>

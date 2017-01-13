@@ -1,3 +1,4 @@
+from googleapiclient.errors import HttpError
 from googleAuth import GoogleAuth
 from httplib2 import ServerNotFoundError
 
@@ -44,7 +45,12 @@ class Members(GoogleAuth):
         """
             Returns a list of owners for a group given its group_id
         """
-        owners = self.service.list(groupKey=group_id, roles='OWNER').execute()
+        try:
+            owners = self.service.list(groupKey=group_id, roles='OWNER').execute()
+        except HttpError:
+            print("Error contacting the Google Members API server...")
+            sys.exit()
+
         results = []
         if owners.get('members', None):
             for member in owners['members']:
