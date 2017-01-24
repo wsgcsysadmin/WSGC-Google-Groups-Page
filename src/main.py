@@ -1,12 +1,13 @@
-import secrets # You'll need to create your own secrets file
 
 from datetime import datetime
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 from googleDirectory import Groups, Members, User
 from googleapiclient.errors import HttpError
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+import secrets # You'll need to create your own secrets file
 
 def gather_group_data():
-    print("Pullig data from Google: <", end="", flush=True)
+    print("Pulling data from Google: <", end="", flush=True)
     groups_handler = Groups(secrets.domain)
     member_handler = Members()
     user_handler = User()
@@ -89,6 +90,9 @@ def generate_html_from_groups(groups):
         index_file.write(index_contents.render())
 
 def build_index_page():
+    """
+        Generates an index.html file and dumps it in the assets directory
+    """
     groups = gather_group_data()
     generate_html_from_groups(groups)
 
