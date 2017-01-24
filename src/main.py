@@ -4,7 +4,11 @@ from googleDirectory import Groups, Members, User
 from googleapiclient.errors import HttpError
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+import os
 import secrets # You'll need to create your own secrets file
+
+SOURCE_DIR = os.path.dirname(__file__)
+ASSETS_DIR = os.path.join(SOURCE_DIR, '../assets')
 
 def gather_group_data():
     print("Pulling data from Google: <", end="", flush=True)
@@ -81,12 +85,13 @@ def generate_html_from_groups(groups):
 
     # Next, use the html content to generate index.html from a template
     env = Environment(
-        loader = FileSystemLoader('../assets'),
+        loader = FileSystemLoader(ASSETS_DIR),
         autoescape = select_autoescape(['html', 'xml'])
     )
 
     index_contents = env.from_string(html)
-    with open('../assets/index.html', 'w') as index_file:
+    index_filepath = os.path.join(ASSETS_DIR, 'index.html')
+    with open(index_filepath, 'w') as index_file:
         index_file.write(index_contents.render())
 
 def build_index_page():
