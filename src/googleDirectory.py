@@ -92,7 +92,8 @@ class Groups(GoogleAuth):
             group_info = {
                 'id': group['id'],
                 'name': group['name'],
-                'email': group['email']}
+                'email': group['email'],
+                'aliases': group.get('aliases', None)}
             results.append(group_info)
 
         return results, token
